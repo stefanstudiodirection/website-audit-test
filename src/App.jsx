@@ -21,7 +21,7 @@ function getScoreColor(score) {
 
 function App() {
   const [url, setUrl] = useState('');
-  const [apiKey, setApiKey] = useState('AIzaSyB1TbinzAUw_e_G8Y2ip3uSxg_VHbTgpbw');
+  const [apiKey, setApiKey] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);

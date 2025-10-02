@@ -5,7 +5,8 @@ import cors from 'cors';
 
 const app = express();
 const PORT = process.env.PORT || 4001;
-const GEMINI_API_KEY = 'AIzaSyBPmqX9aWtVtfvC75Sr5x_5RDyDiF8DOPw';
+require('dotenv').config();
+const GEMINI_API_KEY = process.env.GEMINI_API_KEY;
 
 app.use(cors());
 app.use(express.json({ limit: '2mb' }));
