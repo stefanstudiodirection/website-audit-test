@@ -21,7 +21,6 @@ function getScoreColor(score) {
 
 function App() {
   const [url, setUrl] = useState('');
-  const [apiKey, setApiKey] = useState('');
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
   const [result, setResult] = useState(null);
@@ -41,11 +40,13 @@ function App() {
     setLoading(true);
     setProgress('Fetching data...');
     try {
-      let apiUrl = `https://www.googleapis.com/pagespeedonline/v5/runPagespeed?url=${encodeURIComponent(url)}`;
-      if (apiKey) {
-        apiUrl += `&key=${encodeURIComponent(apiKey)}`;
-      }
-      const res = await fetch(apiUrl);
+
+      // Call backend proxy for PageSpeed Insights
+  const res = await fetch('/api/pagespeed', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ url })
+      });
       if (!res.ok) throw new Error('API error: ' + res.status);
       const data = await res.json();
       if (data.error) throw new Error(data.error.message);
@@ -107,14 +108,6 @@ function App() {
             onChange={e => setUrl(e.target.value)}
             required
             pattern="https?://.+"
-            disabled={loading}
-          />
-          <input
-            type="text"
-            className="border rounded px-3 py-2 focus:outline-none focus:ring-2 focus:ring-blue-400"
-            placeholder="API Key (optional, get from Google Cloud)"
-            value={apiKey}
-            onChange={e => setApiKey(e.target.value)}
             disabled={loading}
           />
 
